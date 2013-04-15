@@ -14,7 +14,8 @@ def files(path, lower=None, upper=None, order=sorted):
         opath = os.path.join(path, name)
         if (lower is None or opath >= lower) and (upper is None or opath < upper):
             if os.path.isdir(opath):
-                yield from files(opath, lower, upper, order)
+                for file in files(opath, lower, upper, order):
+                    yield file
             else:
                 yield opath
 
