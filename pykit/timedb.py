@@ -1,6 +1,5 @@
 import io
 import datetime
-import errno
 import itertools
 import os
 
@@ -40,7 +39,7 @@ class TimeDB(object):
         return os.path.join(self.root, time.strftime(fpath[self.opts.get('by', 'day')]))
 
     def format(self, time, data):
-        return '%s %d %s\n' % (time.strftime(fpath['second']), len(data), data)
+        return '%s %d ' % (time.strftime(fpath['second']), len(data)) + data + '\n'
 
     def lower(self, time):
         return self.path(time) if time else None
@@ -50,7 +49,7 @@ class TimeDB(object):
 
     def log(self, data, time=None):
         time = time or datetime.datetime.now()
-        file = pykit.path.open_a(self.path(time))
+        file = pykit.path.openw(self.path(time), 'a+')
         file.write(self.format(time, data))
 
     def items(self, file):
@@ -72,6 +71,6 @@ class TimeDB(object):
 
     def between(self, t1=None, t2=None, **kwds):
         for path in self.paths(t1=t1, t2=t2, **kwds):
-            for uniq, time, data in self.items(pykit.path.open_r(path)):
+            for uniq, time, data in self.items(pykit.path.openr(path, 'r')):
                 if (t1 is None or time >= t1) and (t2 is None or time <= t2):
                     yield uniq, time, data

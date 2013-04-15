@@ -1,4 +1,5 @@
 import os
+import errno
 
 def ls(path):
     try:
@@ -17,19 +18,19 @@ def files(path, lower=None, upper=None, order=sorted):
             else:
                 yield opath
 
-def open_a(path):
+def openr(path, mode='rb'):
     try:
-        return open(path, 'a+')
-    except IOError as e:
-        if e.errno == errno.ENOENT:
-            os.makedirs(os.path.dirname(path))
-            return open(path, 'a+')
-        raise
-
-def open_r(path):
-    try:
-        return open(path, 'r')
+        return open(path, mode)
     except IOError as e:
         if e.errno == errno.ENOENT:
             return io.BytesIO()
+        raise
+
+def openw(path, mode='w+b'):
+    try:
+        return open(path, mode)
+    except IOError as e:
+        if e.errno == errno.ENOENT:
+            os.makedirs(os.path.dirname(path))
+            return open(path, mode)
         raise
