@@ -12,9 +12,9 @@ fpath = {'second': '%Y/%m/%d/%H/%M/%S',
          'month':  '%Y/%m',
          'year':   '%Y'}
 
-ftime = {'second': '%Y/%m/%d/%H/%M/%S',
-         'minute': '%Y/%m/%d/%H/%M',
-         'hour':   '%Y/%m/%d/%H',
+ftime = {'second': '%Y/%m/%d %H:%M:%S',
+         'minute': '%Y/%m/%d %H:%M',
+         'hour':   '%Y/%m/%d %H',
          'day':    '%Y/%m/%d',
          'month':  '%Y/%m',
          'year':   '%Y'}
@@ -39,7 +39,7 @@ class TimeDB(object):
         return os.path.join(self.root, time.strftime(fpath[self.opts.get('by', 'day')]))
 
     def format(self, time, data):
-        return '%s %d ' % (time.strftime(fpath['second']), len(data)) + data + '\n'
+        return '%s %d ' % (time.strftime(ftime['second']), len(data)) + data + '\n'
 
     def lower(self, time):
         return self.path(time) if time else None
