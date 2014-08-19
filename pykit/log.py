@@ -18,14 +18,21 @@ def path_to_int(path, depth=2, base=36):
         p /= unit
     return i
 
-def tag(((pa, oa), (pb, ob))):
-    return '%s:%d-%s:%d' % (pa.replace('/', '.'), oa, pb.replace('/', '.'), ob)
+def id_to_str(id):
+    return '%s:%d' % (id[0].replace('/', '.'), id[1]) if id else '_'
+
+def str_to_id(s):
+    if s is '_':
+        return None
+    p, o = s.split(':')
+    return p.replace('.', '/'), int(o)
+
+def tag((a, b)):
+    return '%s-%s' % (id_to_str(a), id_to_str(b))
 
 def untag(tag):
     a, b = tag.split('-')
-    pa, oa = a.split(':')
-    pb, ob = b.split(':')
-    return (pa.replace('.', '/'), int(oa)), (pb.replace('.', '/'), int(ob))
+    return str_to_id(a), str_to_id(b)
 
 def rel(root, path):
     return util.disfix(root, path).strip('/')
