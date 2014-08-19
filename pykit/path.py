@@ -38,11 +38,18 @@ def openr(path, mode='rb'):
             return io.BytesIO()
         raise
 
-def openw(path, mode='w+b'):
+def openw(path, mode='w+b', dirs=True):
     try:
         return open(path, mode)
     except IOError as e:
-        if e.errno == errno.ENOENT:
+        if e.errno == errno.ENOENT and dirs:
             os.makedirs(os.path.dirname(path))
             return open(path, mode)
         raise
+
+def write(path, data, **opts):
+    temp = opts.get('temp', path + '.p')
+    dirs = opts.get('dirs', True)
+    with openw(temp, dirs=dirs) as f:
+        f.write(data)
+    os.rename(temp, path)
