@@ -24,11 +24,17 @@ def walk(path, lower=None, upper=None, order=sorted):
                 for p in walk(opath, lower, upper, order):
                     yield p
 
+def peek(iter):
+    try:
+        return next(iter)
+    except StopIteration:
+        return None
+
 def head(path):
-    return next(walk(path))
+    return peek(walk(path))
 
 def last(path):
-    return next(walk(path, order=lambda p: sorted(p, reverse=True)))
+    return peek(walk(path, order=lambda p: sorted(p, reverse=True)))
 
 def openr(path, mode='rb'):
     try:
