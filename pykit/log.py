@@ -18,7 +18,7 @@ def path_to_int(path, depth=2, base=36):
         p /= unit
     return i
 
-def id_to_str(id, inf='.'):
+def id_to_str(id, inf='-'):
     return '%s:%d' % (id[0].replace('/', '.'), id[1]) if id else inf
 
 def str_to_id(s):
@@ -28,7 +28,7 @@ def str_to_id(s):
     return p.replace('.', '/'), int(o)
 
 def tag((a, b)):
-    return '%s-%s' % (id_to_str(a), id_to_str(b, ':'))
+    return '%s-%s' % (id_to_str(a), id_to_str(b, '='))
 
 def untag(tag):
     a, b = tag.split('-')
