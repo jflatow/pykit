@@ -18,7 +18,7 @@ def path_to_int(path, depth=2, base=36):
         p /= unit
     return i
 
-def id_to_str(id, inf='-'):
+def id_to_str(id, inf='+'):
     return '%s:%d' % (id[0].replace('/', '.'), id[1]) if id else inf
 
 def str_to_id(s):
