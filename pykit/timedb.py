@@ -1,4 +1,3 @@
-import io
 import datetime
 import itertools
 import os
@@ -67,7 +66,7 @@ class TimeDB(object):
     def paths(self, t1=None, t2=None, reverse=False):
         def order(paths):
             return [p for p in sorted(paths, reverse=reverse) if p.isdigit()]
-        return pykit.path.files(self.root, lower=self.lower(t1), upper=self.upper(t2), order=order)
+        return pykit.path.walk(self.root, lower=self.lower(t1), upper=self.upper(t2), order=order)
 
     def between(self, t1=None, t2=None, **kwds):
         for path in self.paths(t1=t1, t2=t2, **kwds):
