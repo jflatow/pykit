@@ -4,7 +4,7 @@ def disfix(prefix, string):
         return string[len(prefix):]
     return string
 
-def number(n, base=10, A='0123456789abcdefghijklmnopqrstuvwxyz'):
+def number(n, base=10, A='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
     if n == 0 or base < 2:
         return A[0]
     elif n < 0:
