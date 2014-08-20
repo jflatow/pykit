@@ -7,7 +7,7 @@ MAGIC = 'logfile:'
 OZERO = 42
 
 def int_to_path(int, depth=2, base=36):
-    num = util.number(int, base).rjust(2 * depth, '0')
+    num = util.pad(int, 2 * depth, base)
     return os.path.join(*(x + y for x, y in zip(num[::2], num[1::2])))
 
 def path_to_int(path, depth=2, base=36):
@@ -19,13 +19,15 @@ def path_to_int(path, depth=2, base=36):
     return i
 
 def id_to_str(id, inf='+'):
-    return '%s:%d' % (id[0].replace('/', '.'), id[1]) if id else inf
+    if id is None:
+        return inf
+    return '%s:%s' % (id[0].replace('/', '.'), util.pad(id[1], 25, 36))
 
 def str_to_id(s):
     if len(s) == 1:
         return None
     p, o = s.split(':')
-    return p.replace('.', '/'), int(o)
+    return p.replace('.', '/'), int(o, 36)
 
 def tag((a, b)):
     return '%s-%s' % (id_to_str(a), id_to_str(b, '='))
