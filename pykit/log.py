@@ -96,6 +96,12 @@ class Log(object): # NB: currently read-only
     def __iter__(self):
         return self.range()
 
+    def __getitem__(self, id):
+        try:
+            return next(self.range(id))
+        except StopIteration:
+            raise KeyError(id)
+
     def verify(self):
         c0, c1 = header(self.file)
         nl_eof = pread(self.file, max(c0, c1), 2)
