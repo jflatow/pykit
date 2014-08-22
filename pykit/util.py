@@ -1,3 +1,4 @@
+from itertools import groupby
 
 def disfix(prefix, string):
     if string.startswith(prefix):
@@ -16,3 +17,10 @@ def pad(n, width=0, base=10):
 
 def slit(string, i=0):
     return string[:i], string[i:]
+
+def key((k, v)):
+    return k
+
+def kvgroup(kviter, key=key):
+    for k, kvs in groupby(kviter, key):
+        yield k, (v for _k, v in kvs)
